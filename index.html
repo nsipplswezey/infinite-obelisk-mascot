@@ -1,0 +1,20 @@
+<script type='text/javascript' src='bower_components/jquery-2.1.0.min/index.js'></script>
+<script type='text/javascript' src='bower_components/angular/angular.min.js'></script>
+<script type='text/javascript' src='bower_components/angular-scroll-glue/src/scrollglue.js'></script>
+<script type='text/javascript' src='bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js'></script>
+<script type='text/javascript' src='app.js'></script>
+
+<script>
+    var pageScroll = function(){
+    window.scrollBy(0,1);
+    scrolldelay = setTimeout('pageScroll()',10);
+  }
+    pageScroll();
+</script>
+
+<div ng-app='app' ng-controller='DemoController' onLoad="pageScroll()">
+    <div infinite-scroll='loadMore()' infinite-scroll-distance='2'>
+        <img ng-repeat='image in images' ng-src='http://placehold.it/225x250&text={{image}}' id='{{image}}'>
+    </div>
+</div>
+
