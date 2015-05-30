@@ -1,0 +1,28 @@
+{
+  "name": "Infinite-Obelisk-Mascot",
+  "version": "0.0.2",
+  "homepage": "https://github.com/nsipplswezey/infinite-obelisk-mascot",
+  "authors": [
+    "Nick S <nsipplswezey@gmail.com>"
+  ],
+  "description": "An infinite obelisk",
+  "main": "index.html",
+  "keywords": [
+    "infinite",
+    "scroll",
+    "obelisk"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ngInfiniteScroll": "1.0.0",
+    "jquery-2.1.0.min": "http://code.jquery.com/jquery-2.1.0.min.js",
+    "angular": "~1.4.0"
+  }
+}
