@@ -5,10 +5,11 @@
 
 <script>
     var pageScroll = function(){
-    window.scrollBy(0,1);
-    scrolldelay = setTimeout('pageScroll()',10);
-  }
+        window.scrollBy(0,1);
+        scrolldelay = setTimeout('pageScroll()',10);
+    }
     pageScroll();
+
 </script>
 
 <div ng-app='app' ng-controller='DemoController' onLoad="pageScroll()">
