@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset=utf-8>
+        <title>Infinity JS</title>
+
+
+        <script type='text/javascript' src='bower_components/jquery-2.1.0.min/index.js'></script>
+        <script type='text/javascript' src='bower_components/infinity/infinity.js'></script>
+    </head>
+
+    <body>
+        <div id='my-infinite-container'></div>
+
+
+
+        <script>
+            //select the div
+            //turn it into a list view
+            var $el = $('#my-infinite-container');
+            var listView = new infinity.ListView($el);
+
+            //this appends items
+            //var $newContent = $('<p>Hello World</p>');
+            var $newContent = $('<img src="http://www.jvs.org/wordpress/wp-content/uploads/2013/09/placeholder.png" class="my-items">');
+
+            listView.append($newContent);
+
+            var appendX = function(x) {
+                for (var i = 0; i < x; i++){
+                    listView.append($newContent);
+                }
+            }
+
+
+            //this removes items
+            var listItems = listView.find('.my-items');
+            for(var index = 0, length = listItems.length; index < length; index++) {
+                listItems[index].remove();
+            }
+
+
+            //ok. I want to figure out how to initialize the page
+            //lets test whether its the hello world div
+            //its not the div
+            //idk about the scrolling.. I trust that to the interface
+
+            //he has this big fat render function. which has been fun to read. but feels like a rabit hole
+            //I think this has to do with the size of the div or something...
+            //step 1 is to get something infnite scrolling, before looking into all this ejs stuff
+
+            //the image I can see... is wrapped in a div...
+            //and then there's this sneaky invisible div above... but that comes by default
+            //and the first append works
+            //but subsequent appends don't! Why?
+            //for some reason subsequent appends just add more space to the listView... but doesn't add html
+            //and it resizes the container...
+
+            //so maybe I missed something in the intro...
+            //didn't miss anything
+            //and if not... then I can look at the example and see what they're appending
+            //they namespace all the page data to a Pug object
+            //I REALLY like this. Because it's actually all JS. And super transparent.
+            //Pug! And they're all pulled from tumbler. Wow.
+
+            //and then if not there... I can get into the source code of the append function
+            //which is kinda fun... because that's where I want to swap a data structure
+
+
+            var pageScroll = function(toggle){
+                if(toggle){
+                    window.scrollBy(0,1);
+                    scrolldelay = setTimeout('pageScroll()',10);
+                }
+
+            }
+            //pageScroll();
+
+        </script>
+
+
+
+    </body>
+</html>
+
