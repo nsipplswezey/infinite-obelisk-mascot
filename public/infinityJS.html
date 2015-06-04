@@ -10,34 +10,128 @@
     </head>
 
     <body>
-        <div id='my-infinite-container'></div>
+        <div class='container'>
+            <div class='list-view'> </div>
+
+        </div>
 
 
 
         <script>
             //select the div
             //turn it into a list view
-            var $el = $('#my-infinite-container');
-            var listView = new infinity.ListView($el);
+            var $el = $('.list-view');
+            var listView = new infinity.ListView($el,
+                                                 {lazy: function(){
+                                                     console.log('lazy');
+                                                 }});
 
             //this appends items
             //var $newContent = $('<p>Hello World</p>');
-            var $newContent = $('<img src="http://www.jvs.org/wordpress/wp-content/uploads/2013/09/placeholder.png" class="my-items">');
 
-            listView.append($newContent);
+            //ok I've got things appended.
+            //But I don't have it updating.
+            //Maybe that's what goes in the lazy...
+            //I suspect it will blow the stack
 
-            var appendX = function(x) {
-                for (var i = 0; i < x; i++){
-                    listView.append($newContent);
+            //I also suspect it has something to do with pugbomb?
+            //And row()
+
+
+            /*
+            function row() {
+                var index, colIndex, length, $minCol, $currCol, $pug;
+
+                for(index = 0, length = columns.length; index < length; index++) {
+
+                    for(colIndex = 0; colIndex < length; colIndex++) {
+
+                    //current column jQuery element
+                        $currCol = $(columns[colIndex]);
+
+                    //and there's this height() prop...
+                    //and we are selecting a column, which is a list view
+                    //and we're appending the result of pug()
+                    //which is a bunch of data... that's all... so that's a jQuery append.
+                    //so this is the function that creates all the pugs... maybe I need one these?
+
+                        if(!$minCol) $minCol = $currCol;
+                        else $minCol = $minCol.height() > $currCol.height() ? $currCol : $minCol;
+                    }
+
+                    if(Pug.config.infinityOn) $minCol.data('listView').append(pug());
+                    else $minCol.append(pug);
                 }
             }
 
 
-            //this removes items
-            var listItems = listView.find('.my-items');
-            for(var index = 0, length = listItems.length; index < length; index++) {
-                listItems[index].remove();
+
+
+
+            function pb(num) {
+                //exit if num is 0
+                var index;
+                if(num <= 0) return;
+
+
+                //otherwise... if num is less than 70
+
+                for(index = 0; index < num && index < 70; index++) {
+
+                    //we call row a bunch. We make a bunch of pugs?
+
+                    row();
+                }
+
+                //and we decrement index...
+
+                num -= index;
+
+                if(!Pug.config.infinityOn) {
+                    $pug = columns.find('.pug');
+                    $pug.each(function() {
+                        $(this).attr('src', $(this).attr('data-original'));
+                    });
+                }
+
+                // And all this great stuff is wrapped up in this pug object!
+                //OH SHIT
+                //The infinite scroll...
+                //Is only with a bunch of content already on the board?
+                //???
+                //OH SHIT!
+                //IT DOESN'T AUTOMATICALLY GENERATE CONTENT FOR YOU?!
+                //It just scrolls your content efficiently.
+
+                setTimeout(function() { pb(num - 1); }, 0);
             }
+
+            Pug.bomb = pb;
+            Pug.count = function() { return pugCount; };
+*/
+
+
+
+            var currentElemCount = 0;
+
+            var appendX = function(x) {
+                for (var i = 0; i < x; i++){
+                    currentElemCount++;
+                    //content has to be new
+                    var $newContent = $('<img src="http://www.jvs.org/wordpress/wp-content/uploads/2013/09/placeholder.png" class="my-items">');
+
+                    //var $newContent = $('<img src="http://placehold.it/225x250&text=' +  currentElemCount + '"'  + ' class="my-items">')
+                    listView.append($newContent);
+                }
+            }
+            appendX(20);
+
+
+            //this removes items
+            //             var listItems = listView.find('.my-items');
+            //             for(var index = 0, length = listItems.length; index < length; index++) {
+            //                 listItems[index].remove();
+            //             }
 
 
             //ok. I want to figure out how to initialize the page
@@ -58,22 +152,36 @@
 
             //so maybe I missed something in the intro...
             //didn't miss anything
+
             //and if not... then I can look at the example and see what they're appending
             //they namespace all the page data to a Pug object
             //I REALLY like this. Because it's actually all JS. And super transparent.
             //Pug! And they're all pulled from tumbler. Wow.
+
+
 
             //and then if not there... I can get into the source code of the append function
             //which is kinda fun... because that's where I want to swap a data structure
 
 
             var pageScroll = function(toggle){
-                if(toggle){
-                    window.scrollBy(0,1);
-                    scrolldelay = setTimeout('pageScroll()',10);
-                }
+                window.scrollBy(0,1);
+                scrolldelay = setTimeout('pageScroll()',10);
 
-            }
+            };
+
+
+            $(window).scroll(function(){
+                //console.log("$(window).scrollTop()" + $(window).scrollTop());
+                //console.log("$(window).height()" + $(window).height());
+                //console.log("$(document).height() " + $(document).height());
+                //console.log("window scrolltop + window height " + ($(window).height() + $(window).scrollTop() - 500) );
+
+                if($(window).scrollTop() + $(window).height() + 500 > $(document).height()) {
+                    appendX(2);
+                }
+            })
+
             //pageScroll();
 
         </script>
